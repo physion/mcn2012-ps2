@@ -4,3 +4,9 @@
 *.jar
 *.war
 *.ear
+
+# OS X
+.DS_Store
+
+# Unzipped data
+problem_set1/
