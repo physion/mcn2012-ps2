@@ -107,17 +107,8 @@ function insertTestGroup(experiment,...
     % Split spike times into epochs
     epochBoundaries = find(spikes(1:length(spikes)-1) > spikes(2:end));
     
-    % Split response into epochs
-    repeatDuration = parameters.epochDurationSeconds / ...
-        parameters.stimParameters.durationSeconds;
-    
     % Add split stim and reponse epochs
-    
     for i = 1:parameters.stimParameters.numRepetitions
-        stimStartIdx = (i-1)*(repeatDuration) / parameters.stimParameters.sampleRate;
-        stimEndIdx = i*(repeatDuration) / parameters.stimParameters.sampleRate - 1;
-        
-        epochStimData = stimData(stimStartIdx:stimEndIdx);
         
         if(i == 1)
             epochSpikes = spikes(1:epochBoundaries(i));
@@ -128,7 +119,7 @@ function insertTestGroup(experiment,...
         end
         
         stimParams = parameters.stimParameters;
-        stimParams.stimData = NumericData(epochStimData);
+        stimParams.stimData = NumericData(stimData);
         
         epochStartTime = group.getStartTime().plusSeconds(parameters.stimParameters.durationSeconds*(i-1));
         
@@ -177,7 +168,7 @@ function resultMv = fabricateOriginalResponse(spikes, srate, duration)
     
     resp(spikeIdx(spikeIdx > 1) - 1) = 0;
     resp(spikeIdx(spikeIdx > 0)) = 50;
-    resp(spikeIdx(spikeIdx < length(resp)) + 1) = 0;
+%     resp(spikeIdx(spikeIdx < length(resp)) + 1) = 0;
     
     resultMv = NumericData(resp);
 end
