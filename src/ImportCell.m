@@ -65,9 +65,9 @@ function insertProbeGroup(experiment,...
     stimParams = parameters.stimParameters;
     stimParams.stimData = NumericData(stimData);
     epoch.insertStimulus(experiment.externalDevice('Stimulator','MCN'),... % TODO
-        struct2map(stimParams),...
+        struct2map(struct()),...
         stimID,...
-        struct2map(parameters.stimParameters),...
+        struct2map(stimParams),...
         'a.u.',... %TODO
         'V'); %TODO
     
@@ -112,7 +112,7 @@ function insertTestGroup(experiment,...
     group.addTag(cellSource.getLabel());
     
     % If spike times are monotonic (cell 4), make times repeat-relative
-    if(any(spikes > parameters.stimParameters.durationSeconds))
+    if(any(floor(spikes) > parameters.stimParameters.durationSeconds))
         for i = 1:parameters.stimParameters.numRepetitions
             startSeconds = (i-1)*parameters.stimParameters.durationSeconds;
             endSeconds = (i)*parameters.stimParameters.durationSeconds;
@@ -124,17 +124,17 @@ function insertTestGroup(experiment,...
     
     % Split spike times into epochs
     
-    epochBoundaries = find(spikes(1:length(spikes)-1) > spikes(2:end));
+    epochEndBoundaries = find(spikes(1:length(spikes)-1) > spikes(2:end));
     
     % Add split stim and reponse epochs
     for i = 1:parameters.stimParameters.numRepetitions
         
         if(i == 1)
-            epochSpikes = spikes(1:epochBoundaries(i));
+            epochSpikes = spikes(1:epochEndBoundaries(i));
         elseif(i == parameters.stimParameters.numRepetitions)
-            epochSpikes = spikes((epochBoundaries(i-1)+1):end);
+            epochSpikes = spikes((epochEndBoundaries(i-1)+1):end);
         else
-            epochSpikes = spikes((epochBoundaries(i-1)+1):epochBoundaries(i));
+            epochSpikes = spikes((epochEndBoundaries(i-1)+1):epochEndBoundaries(i));
         end
         
         stimParams = parameters.stimParameters;
@@ -150,7 +150,7 @@ function insertTestGroup(experiment,...
         epoch.insertStimulus(experiment.externalDevice('Stimulator','MCN'),... % TODO
             struct2map(struct()),...
             stimID,...
-            struct2map(parameters.stimParameters),...
+            struct2map(stimParams),...
             'a.u.',... %TODO
             'V'); %TODO
         

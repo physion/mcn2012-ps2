@@ -136,11 +136,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
             while(itr.hasNext())
                 e = itr.next();
                 assertEqual(parameters.probe.stimParameters.sampleRate,...
-                    e.getResponse('Model Cell').getSampleRates());
+                    e.getResponse('Model Cell').getSamplingRates());
                 
                 actual = e.getResponse('Model Cell').getSamplingUnits();
-                assertEqual(parameters.probe.stimParameters.sampleRateUnits,...
-                    actual{1});
+                assertJavaEqual(java.lang.String(parameters.probe.stimParameters.sampleRateUnits),...
+                    actual(1));
             end
             
         end
@@ -175,8 +175,9 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
             itr = probeGroup.getEpochsIterable().iterator();
             while(itr.hasNext())
                 e = itr.next();
+                actual = Seconds.secondsBetween(e.getStartTime(), e.getEndTime());
                 assertEqual(parameters.probe.epochDurationSeconds,...
-                Seconds.secondsBetween(e.getStartTime(), e.getEndTime()).getSeconds());
+                actual.getSeconds());
             end
         end
         
@@ -210,8 +211,9 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
             itr = testGroup.getEpochsIterable().iterator();
             while(itr.hasNext())
                 e = itr.next();
+                actual = Seconds.secondsBetween(e.getStartTime(), e.getEndTime());
                 assertEqual(parameters.test.stimParameters.durationSeconds,...
-                Seconds.secondsBetween(e.getStartTime(), e.getEndTime()).getSeconds());
+                actual.getSeconds());
             end
         end
         
@@ -317,7 +319,7 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
             while(itr.hasNext())
                 e = itr.next();
                 assertEqual(probeSpikes,...
-                    e.getMyDerivedResponse('spikes').getFloatingPointData());
+                    e.getMyDerivedResponse('spikes').getFloatData()');
             end
         end
         
@@ -354,7 +356,7 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
             actualSpikes = {};
             while(itr.hasNext())
                 e = itr.next();
-                actualSpikes{end+1} = e.getMyDerivedResponse('spikes').getFloatingPointData(); %#ok<AGROW>
+                actualSpikes{end+1} = e.getMyDerivedResponse('spikes').getFloatData()'; %#ok<AGROW>
             end
             
             assertEqual(testSpikes, cell2mat(actualSpikes));
