@@ -1,7 +1,7 @@
 %% Setup
 
 ctx = NewDataContext('mcn/mcn.connection');
-datapath = '/Users/barry/development/mcn2012-ps1/problem_set1';
+datapath = '/Users/barry/development/mcn2012-ps2/problem_set1';
 
 %% Project
 
@@ -106,8 +106,8 @@ parameters.test.stimParameters.sampleRateUnits = 'Hz';
 
 probeStimPath = fullfile(datapath, 'cell4_stim.txt');
 testStimPath = fullfile(datapath, 'cell4_stim_test.txt');
-probeSpikesPath = fullfile(datapath, 'cell2_probe_spks.txt');
-testSpikesPath = fullfile(datapath, 'cell2_test_spks.txt');
+probeSpikesPath = fullfile(datapath, 'cell4_spikes.txt');
+testSpikesPath = fullfile(datapath, 'cell4_spikes_test.txt');
 
 exp = proj.insertExperiment('cell 4', datetime(2012,7,30));
 
