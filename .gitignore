@@ -10,3 +10,11 @@
 
 # Unzipped data
 problem_set1/
+
+*.DB
+
+*.connection
+
+*.fdb
+
+*.JNL

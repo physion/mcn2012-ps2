@@ -10,15 +10,27 @@ classdef TestMCN2012PS1Base < TestMatlabSuite
     methods
         function self = TestMCN2012PS1Base(name)
             self = self@TestMatlabSuite(name);
-            self.dataPath = fullfile(mfilename('fullpath'),...
+            
+            self.dataPath = fullfile(fileparts(mfilename('fullpath')),...
                 '..',...
                 'problem_set1');
             
-            self.project = projectForInsertion(self.dataContext,...
+        end
+        
+        function setUp(self)
+            import ovation.*
+            
+            setUp@TestMatlabSuite(self)
+            
+            self.project = projectForInsertion(self.context,...
                 'Problem Set 2',...
                 '2012/07/30',...
                 'MCN 2012 Problem Set 2');
             
+        end
+        
+        function testFdName = federationName(~)
+            testFdName = 'mcn2012';
         end
     end
 end
