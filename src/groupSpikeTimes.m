@@ -7,14 +7,17 @@ function spikeTimes = groupSpikeTimes(epochGroup)
 
 
 	epochs = epochGroup.getEpochs();
-	spikeTimes = cell(length(epochGroups), 1)
+	spikeTimes = cell(1, length(epochs));
 
 	for i = 1:length(epochs)
 		e = epochs(i);
-		spikeDerivedResponses = e.getDerivedResponses('spikes')
-		if(length(spikeDerivedResponses) > 1)
-
-		end
+		
+        spikeDerivedResponses = e.getDerivedResponses('spikes');
+        if(length(spikeDerivedResponses) > 1)
+            warning('ovation:mcn2012',...
+                'Epoch has more than one DerivedResponse with the name "spikes"');
+        end
+        
 		spikeTimes{i} = spikeDerivedResponses(1).getFloatingPointData()';
 	end
 end

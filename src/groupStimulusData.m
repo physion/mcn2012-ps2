@@ -7,11 +7,11 @@ function stimData = groupStimulusData(epochGroup)
 
 
 	epochs = epochGroup.getEpochs();
-	stimData = cell(1, length(epochGroups))
+	stimData = cell(length(epochs), 1);
 
 	for i = 1:length(epochs)
 		e = epochs(i);
-		stimulus = e.getStimulus('Stimulator')
+		stimulus = e.getStimulus('Stimulator');
 		stimData{i} = stimulus.getStimulusParameter('stimData').getFloatingPointData()';
 	end
 
