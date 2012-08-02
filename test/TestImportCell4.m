@@ -352,11 +352,12 @@ classdef TestImportCell4 < TestMCN2012PS1Base
             
             testSpikes = readTextData(testSpikesPath);
             itr = testGroup.getEpochsIterable().iterator();
-            
+            cummulativeDuration = 0;
             actualSpikes = {};
             while(itr.hasNext())
                 e = itr.next();
-                actualSpikes{end+1} = e.getMyDerivedResponse('spikes').getFloatData()'; %#ok<AGROW>
+                actualSpikes{end+1} = e.getMyDerivedResponse('spikes').getFloatData()' + cummulativeDuration; %#ok<AGROW>
+                cummulativeDuration = cummulativeDuration + e.getDuration();
             end
             
             assertEqual(testSpikes, cell2mat(actualSpikes));
