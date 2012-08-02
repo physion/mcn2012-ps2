@@ -1,24 +1,24 @@
 % Copyright (c) 2012 Physion Consulting LLC
 
-classdef TestImportsCell1 < TestMCN2012PS1Base
+classdef TestImportCell4 < TestMCN2012PS1Base
     methods
-        function self = TestImportsCell1(name)
+        function self = TestImportCell4(name)
             self = self@TestMCN2012PS1Base(name);
         end
         
         function testFdName = federationName(~)
-            testFdName = 'mcn2012_cell1';
+            testFdName = 'mcn2012_cell4';
         end
         
         function parameters = getImportParameters(~)
-            parameters.probe.epochDurationSeconds=60*60;
-            parameters.probe.stimParameters.sampleRate = 100;
+            parameters.probe.epochDurationSeconds=60*20;
+            parameters.probe.stimParameters.sampleRate = 1000;
             parameters.probe.stimParameters.sampleRateUnits = 'Hz';
             
-            parameters.test.epochDurationSeconds=60*60;
+            parameters.test.epochDurationSeconds=20*60;
             parameters.test.stimParameters.numRepetitions = 120;
             parameters.test.stimParameters.durationSeconds = parameters.test.epochDurationSeconds / parameters.test.stimParameters.numRepetitions;
-            parameters.test.stimParameters.sampleRate = 100;
+            parameters.test.stimParameters.sampleRate = 1000;
             parameters.test.stimParameters.sampleRateUnits = 'Hz';
         end
         
@@ -26,11 +26,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
         function testShouldImportTwoEpochGroups(self)
             import ovation.*
             
-            probeStimPath = fullfile(self.dataPath, 'stim_long_1hr.txt');
-            testStimPath = fullfile(self.dataPath, 'stim_repeat_30s.txt');
+            probeStimPath = fullfile(self.dataPath, 'cell4_stim.txt');
+            testStimPath = fullfile(self.dataPath, 'cell4_stim_test.txt');
             
-            probeSpikesPath = fullfile(self.dataPath, 'cell1_probe_spks.txt');
-            testSpikesPath = fullfile(self.dataPath, 'cell1_test_spks.txt');
+            probeSpikesPath = fullfile(self.dataPath, 'cell4_spikes.txt');
+            testSpikesPath = fullfile(self.dataPath, 'cell4_spikes_test.txt');
             
             expt = self.project.insertExperiment('Cell 1',...
                 datetime(2012, 7, 30));
@@ -52,11 +52,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
         function testShouldImportProbeAsSingleEpoch(self)
             import ovation.*
             
-            probeStimPath = fullfile(self.dataPath, 'stim_long_1hr.txt');
-            testStimPath = fullfile(self.dataPath, 'stim_repeat_30s.txt');
+            probeStimPath = fullfile(self.dataPath, 'cell4_stim.txt');
+            testStimPath = fullfile(self.dataPath, 'cell4_stim_test.txt');
             
-            probeSpikesPath = fullfile(self.dataPath, 'cell1_probe_spks.txt');
-            testSpikesPath = fullfile(self.dataPath, 'cell1_test_spks.txt');
+            probeSpikesPath = fullfile(self.dataPath, 'cell4_spikes.txt');
+            testSpikesPath = fullfile(self.dataPath, 'cell4_spikes_test.txt');
             
             expt = self.project.insertExperiment('Cell 1',...
                 datetime(2012, 7, 30));
@@ -81,11 +81,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
         function testShouldImportTestAsPerRepeatEpoch(self)
             import ovation.*
             
-            probeStimPath = fullfile(self.dataPath, 'stim_long_1hr.txt');
-            testStimPath = fullfile(self.dataPath, 'stim_repeat_30s.txt');
+            probeStimPath = fullfile(self.dataPath, 'cell4_stim.txt');
+            testStimPath = fullfile(self.dataPath, 'cell4_stim_test.txt');
             
-            probeSpikesPath = fullfile(self.dataPath, 'cell1_probe_spks.txt');
-            testSpikesPath = fullfile(self.dataPath, 'cell1_test_spks.txt');
+            probeSpikesPath = fullfile(self.dataPath, 'cell4_spikes.txt');
+            testSpikesPath = fullfile(self.dataPath, 'cell4_spikes_test.txt');
             
             expt = self.project.insertExperiment('Cell 1',...
                 datetime(2012, 7, 30));
@@ -111,11 +111,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
         function testShouldSetResponseSampleRate(self)
             import ovation.*
             
-            probeStimPath = fullfile(self.dataPath, 'stim_long_1hr.txt');
-            testStimPath = fullfile(self.dataPath, 'stim_repeat_30s.txt');
+            probeStimPath = fullfile(self.dataPath, 'cell4_stim.txt');
+            testStimPath = fullfile(self.dataPath, 'cell4_stim_test.txt');
             
-            probeSpikesPath = fullfile(self.dataPath, 'cell1_probe_spks.txt');
-            testSpikesPath = fullfile(self.dataPath, 'cell1_test_spks.txt');
+            probeSpikesPath = fullfile(self.dataPath, 'cell4_spikes.txt');
+            testSpikesPath = fullfile(self.dataPath, 'cell4_spikes_test.txt');
             
             expt = self.project.insertExperiment('Cell 1',...
                 datetime(2012, 7, 30));
@@ -149,11 +149,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
             import ovation.*
             import org.joda.time.*;
             
-            probeStimPath = fullfile(self.dataPath, 'stim_long_1hr.txt');
-            testStimPath = fullfile(self.dataPath, 'stim_repeat_30s.txt');
+            probeStimPath = fullfile(self.dataPath, 'cell4_stim.txt');
+            testStimPath = fullfile(self.dataPath, 'cell4_stim_test.txt');
             
-            probeSpikesPath = fullfile(self.dataPath, 'cell1_probe_spks.txt');
-            testSpikesPath = fullfile(self.dataPath, 'cell1_test_spks.txt');
+            probeSpikesPath = fullfile(self.dataPath, 'cell4_spikes.txt');
+            testSpikesPath = fullfile(self.dataPath, 'cell4_spikes_test.txt');
             
             expt = self.project.insertExperiment('Cell 1',...
                 datetime(2012, 7, 30));
@@ -185,11 +185,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
                         import ovation.*
             import org.joda.time.*;
             
-            probeStimPath = fullfile(self.dataPath, 'stim_long_1hr.txt');
-            testStimPath = fullfile(self.dataPath, 'stim_repeat_30s.txt');
+            probeStimPath = fullfile(self.dataPath, 'cell4_stim.txt');
+            testStimPath = fullfile(self.dataPath, 'cell4_stim_test.txt');
             
-            probeSpikesPath = fullfile(self.dataPath, 'cell1_probe_spks.txt');
-            testSpikesPath = fullfile(self.dataPath, 'cell1_test_spks.txt');
+            probeSpikesPath = fullfile(self.dataPath, 'cell4_spikes.txt');
+            testSpikesPath = fullfile(self.dataPath, 'cell4_spikes_test.txt');
             
             expt = self.project.insertExperiment('Cell 1',...
                 datetime(2012, 7, 30));
@@ -221,11 +221,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
             import ovation.*
             import org.joda.time.*;
             
-            probeStimPath = fullfile(self.dataPath, 'stim_long_1hr.txt');
-            testStimPath = fullfile(self.dataPath, 'stim_repeat_30s.txt');
+            probeStimPath = fullfile(self.dataPath, 'cell4_stim.txt');
+            testStimPath = fullfile(self.dataPath, 'cell4_stim_test.txt');
             
-            probeSpikesPath = fullfile(self.dataPath, 'cell1_probe_spks.txt');
-            testSpikesPath = fullfile(self.dataPath, 'cell1_test_spks.txt');
+            probeSpikesPath = fullfile(self.dataPath, 'cell4_spikes.txt');
+            testSpikesPath = fullfile(self.dataPath, 'cell4_spikes_test.txt');
             
             expt = self.project.insertExperiment('Cell 1',...
                 datetime(2012, 7, 30));
@@ -256,11 +256,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
             import ovation.*
             import org.joda.time.*;
             
-            probeStimPath = fullfile(self.dataPath, 'stim_long_1hr.txt');
-            testStimPath = fullfile(self.dataPath, 'stim_repeat_30s.txt');
+            probeStimPath = fullfile(self.dataPath, 'cell4_stim.txt');
+            testStimPath = fullfile(self.dataPath, 'cell4_stim_test.txt');
             
-            probeSpikesPath = fullfile(self.dataPath, 'cell1_probe_spks.txt');
-            testSpikesPath = fullfile(self.dataPath, 'cell1_test_spks.txt');
+            probeSpikesPath = fullfile(self.dataPath, 'cell4_spikes.txt');
+            testSpikesPath = fullfile(self.dataPath, 'cell4_spikes_test.txt');
             
             expt = self.project.insertExperiment('Cell 1',...
                 datetime(2012, 7, 30));
@@ -291,11 +291,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
             import ovation.*
             import org.joda.time.*;
             
-            probeStimPath = fullfile(self.dataPath, 'stim_long_1hr.txt');
-            testStimPath = fullfile(self.dataPath, 'stim_repeat_30s.txt');
+            probeStimPath = fullfile(self.dataPath, 'cell4_stim.txt');
+            testStimPath = fullfile(self.dataPath, 'cell4_stim_test.txt');
             
-            probeSpikesPath = fullfile(self.dataPath, 'cell1_probe_spks.txt');
-            testSpikesPath = fullfile(self.dataPath, 'cell1_test_spks.txt');
+            probeSpikesPath = fullfile(self.dataPath, 'cell4_spikes.txt');
+            testSpikesPath = fullfile(self.dataPath, 'cell4_spikes_test.txt');
             
             expt = self.project.insertExperiment('Cell 1',...
                 datetime(2012, 7, 30));
@@ -327,11 +327,11 @@ classdef TestImportsCell1 < TestMCN2012PS1Base
                         import ovation.*
             import org.joda.time.*;
             
-            probeStimPath = fullfile(self.dataPath, 'stim_long_1hr.txt');
-            testStimPath = fullfile(self.dataPath, 'stim_repeat_30s.txt');
+            probeStimPath = fullfile(self.dataPath, 'cell4_stim.txt');
+            testStimPath = fullfile(self.dataPath, 'cell4_stim_test.txt');
             
-            probeSpikesPath = fullfile(self.dataPath, 'cell1_probe_spks.txt');
-            testSpikesPath = fullfile(self.dataPath, 'cell1_test_spks.txt');
+            probeSpikesPath = fullfile(self.dataPath, 'cell4_spikes.txt');
+            testSpikesPath = fullfile(self.dataPath, 'cell4_spikes_test.txt');
             
             expt = self.project.insertExperiment('Cell 1',...
                 datetime(2012, 7, 30));

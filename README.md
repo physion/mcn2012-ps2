@@ -38,3 +38,89 @@ Using the data
 1. Get a cell array of spike times (one entry per Epoch). Spike times are in seconds relative to the start of the Epoch:
 
 		>> spikeTimes = groupSpikeTimes(epochGroup)
+
+
+Saving and Sharing an Analysis Record
+-------------------------------------
+
+Once you've done your analysis from the spike times and stimulus data, you may want to save an AnalysisRecord object in the database documenting your work (and making it easy for others in your group or the class to see and make use of your results). Let's create an AnalysisRecord object describing the results of analysis of the cell above.
+
+Ovation-based analysis functions typically have the following pattern:
+
+		function result = myAnalysisFunction(epochsIterator, parameters)
+
+			while(epochsIterator.hasNext())
+				epoch = epochsIterator.next();
+				%... do something with this epoch ...
+			end
+
+			result = ...
+		end
+
+
+For this project, you really want to work with the EpochGroups (see "Using the data" above), so your top-level function can be pretty simple:
+
+		function result = analyzeEpochGroup(epochsIterator, parameters)
+
+			epochGroups = java.util.HashSet();
+
+			while(epochsIterator.hasNext())
+				epoch = epochsIterator.next();
+				epochGroups.add(epoch.getEpochGroup());
+			end
+
+			uniqueGroups = epochGroups.toArray();
+
+			for i = 1:length(uniqueGroups)
+				result{i} = myEpochGroupAnalysis(uniqueGroups(i), parameters);
+			end
+		end
+
+Now, you just need to write myEpochGroupAnalysis() ;-)
+
+1. Insert an AnalysisRecord referencing the Epochs from the experiment describing one cell. You could, of course, reference only the "test", "probe" or any subset of Epochs. Or you could create an AnalysisRecord that spanned many Epochs from any number of Sources. We recommend that you keep your source code in a version control system such as Git or Subversion. We use GitHub. Ovation's AnalysisRecord objects can store the version control system's URL and revision number of the code for that analysis. If you don't have your code in version control you can attach a zip file of the code (see below). Now, let's create an analysis record:
+
+		>> experiments = cell.getExperiments();
+		>> experiment = experiments(1); % In this case, there's only one Experiment for the Source
+		>> projects = experiment.getProjects();
+		>> project = projects(1); % An experiment can belong to more than one Project, but there's only one in this case.
+		>> parameters = struct(...); % Matlab 
+		>> analysisRecord = project.insertAnalysisRecord('MCN 2012 PS1, Cell 1',... % Pick a descriptive name
+			experiment.getEpochsIterable().iterator(),... % An iterator over all the Epochs in the experiment
+			'analyzeEpochGroup.m',... % Name of the entry function for your analysis
+			struct2map(parameters),... % Analysis parameters
+			'https://github.com/physion/mcn2012-ps2.git',... % URL of your code in a source repository. This is the URL for the problem set 2 code, but you would specifiy your own repository (if you have one)
+			'23b6c71747a8c5b1aa65152d97a84c89a3bbec2f',... % Revision number of the code for *this* analysis
+			);
+
+2. You can add additional text notes to the record describing the analysis or your interpretation:
+
+		>> ar.setNotes('Your notes as a string here...');
+
+3. If you want to add file resources (such as a Matlab figure or PDF, an other document describing the results, or a zip file of code), use the addResource method:
+
+		>> ar.addResource('path/to/a/PDF');
+
+4. You can add tags and properties to AnalysisRecords (just like any other object in the database). You might, for example tag the AnalysisRecord with your group's name so that it's easy to pull out all records for the group:
+
+		>> ar.addTag('awesome group')
+
+
+You can find your analysis records by name:
+
+		>> record = project.getMyAnalysisRecord('MCN 2012 PS1, Cell 1');
+
+Or get a list of all Analysis Records (belonging to all users) with that name (yours should be one of them):
+
+		>> records = project.getAnalysisRecords('MCN 2012 PS1, Cell 1')
+
+*Note* this means that each user can have AnalysisRecords for a project. Even if they have the same name, they don't conflict.
+
+Want to share this analysis record with someone? Send them a link (of course, your record's URI will be different than the example below):
+
+		>> uri = ar.getURIString()
+		ovation:///c9036a2e-e074-49e4-a940-312c8b99c3d1/#2-1001-1-5:1000048
+
+Send this string to your colleauge. Then, they can open your analysis record in their Data Context:
+
+		>> yourRecord = otherContext.objectWithURI('ovation:///c9036a2e-e074-49e4-a940-312c8b99c3d1/#2-1001-1-5:1000048')
