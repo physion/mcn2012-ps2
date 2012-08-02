@@ -112,7 +112,7 @@ You can find your analysis records by name:
 
 Or get a list of all Analysis Records (belonging to all users) with that name (yours should be one of them):
 
-		>> records = project.getAnalysisRecords('MCN 2012 PS1, Cell 1')
+		>> records = project.getAnalysisRecords('MCN 2012 PS1, Cell 1');
 
 *Note* this means that each user can have AnalysisRecords for a project. Even if they have the same name, they don't conflict.
 
