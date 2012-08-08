@@ -3,6 +3,8 @@ MCN 2012 Problem Set 2
 
 This project contains Ovation code to import and read data for MCN Problem Set 2.
 
+If Ovation is not installed on your computer, follow the installations instructions on the [wiki](wiki/Home) before continuing.
+
 
 Import
 ------
